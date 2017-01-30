@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-3">
+    <a href="{% url 'foos:new_game' %}">Enter a match result</a>
+  </div>
+  <div class="col-md-3">
+    Logged in as {{user}}. <a href="{% url 'logout' %}">Logout?</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+  <h2>Recent Singles Games</h2>
+  {% if recent_singles_games %}
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Rating Change</th>
+        <th>Player Name</th>
+        <th>Score</th>
+        <th>Score</th>
+        <th>Player Name</th>
+        <th>Rating Change</th>
+      </tr>
+      </thead>
+      <tbody>
+    {% for game in recent_singles_games %}
+      <tr>
+        {% if game.player1_rating_change > 0 %}
+          <td class="success">
+        {% else %}
+          <td class="danger">
+        {% endif %}
+        {{game.player1_end_rating}} ({{game.player1_rating_change}})</td>
+        <td>{{game.player1}}</td>
+        <td>{{game.player1_score}}</td>
+        <td>{{game.player2_score}}</td>
+        <td>{{game.player2}}</td>
+        {% if game.player2_rating_change > 0 %}
+          <td class="success">
+        {% else %}
+          <td class="danger">
+        {% endif %}
+        {{game.player2_end_rating}} ({{game.player2_rating_change}})</td>
+      </tr>
+    {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="row">
+      <div class="col-md-8">No games available.</div>
+    </div>
+  {% endif %}
+  </div>
+  <div class="col-md-4">
+  <h2>Singles Rankings</h2>
+    {% if singles_ranking %}
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Player</th>
+          <th>Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+      {% for player in singles_ranking %}
+        <tr>
+            <td>{{player.name}}</td>
+            <td>{{player.rating}}</td>
+        </tr>
+      {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+  <h2>Recent Doubles Games</h2>
+  {% if recent_doubles_games %}
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Rating Change</th>
+        <th>Team</th>
+        <th>Score</th>
+        <th>Score</th>
+        <th>Team</th>
+        <th>Rating Change</th>
+      </tr>
+      </thead>
+      <tbody>
+    {% for game in recent_doubles_games %}
+      <tr>
+        {% if game.team1_rating_change > 0 %}
+          <td class="success">
+        {% else %}
+          <td class="danger">
+        {% endif %}
+        {{game.team1_end_rating}} ({{game.team1_rating_change}})</td>
+        <td>{{game.team1}}</td>
+        <td>{{game.team1_score}}</td>
+        <td>{{game.team2_score}}</td>
+        <td>{{game.team2}}</td>
+        {% if game.team2_rating_change > 0 %}
+          <td class="success">
+        {% else %}
+          <td class="danger">
+        {% endif %}
+        {{game.team2_end_rating}} ({{game.team2_rating_change}})</td>
+      </tr>
+    {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="row">
+      <div class="col-md-8">No games available.</div>
+    </div>
+  {% endif %}
+  </div>
+  <div class="col-md-4">
+  <h2>Doubles Rankings</h2>
+    {% if doubles_ranking %}
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Team</th>
+          <th>Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+      {% for team in doubles_ranking %}
+        <tr>
+            <td>{{team}}</td>
+            <td>{{team.rating}}</td>
+        </tr>
+      {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
