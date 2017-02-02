@@ -35,6 +35,10 @@ class SinglesGame(models.Model):
         else:
             return self.player2
 
+    @property
+    def get_date_string(self):
+        return self.date.strftime('%m/%d %H:%M')
+
     def __str__(self):
         return "%s vs. %s" % (self.player1,
                               self.player2)

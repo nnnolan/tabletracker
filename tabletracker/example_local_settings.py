@@ -4,7 +4,7 @@ from tabletracker.settings import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # from django.utils.crypto import get_random_string as grs
-# print grs(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+# print(grs(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'))
 SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
