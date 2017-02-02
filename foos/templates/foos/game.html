@@ -27,7 +27,7 @@
   <form action="{% url 'foos:new_game' %}" method="post" class="form-horizontal">
   {% csrf_token %}
     <div class="form-group">
-      <label class="col-sm-2 control-label">Player 1:</label>
+      <label class="col-sm-2 control-label text-danger">Red Player:</label>
       <div class="col-sm-4">
         <select name="player1">
         {% for player in players %}
@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Player 2:</label>
+      <label class="col-sm-2 control-label text-primary">Blue Player:</label>
       <div class="col-sm-4">
         <select name="player2">
         {% for player in players %}
@@ -73,7 +73,7 @@
   <form action="{% url 'foos:new_game' %}" method="post" class="form-horizontal">
   {% csrf_token %}
     <div class="form-group">
-      <label class="col-sm-2 control-label">Team 1:</label>
+      <label class="col-sm-2 control-label text-danger">Red Team:</label>
       <div class="col-sm-4">
         <select name="team1player1">
         {% for player in players %}
@@ -96,7 +96,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">Team 2:</label>
+      <label class="col-sm-2 control-label text-primary">Blue Team:</label>
       <div class="col-sm-4">
         <select name="team2player1">
         {% for player in players %}
