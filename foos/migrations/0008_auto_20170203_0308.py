@@ -11,7 +11,13 @@ def reverse_losses(apps, schema_editor):
     Player = apps.get_model('foos', 'Player')
     for player in Player.objects.all():
         player.singles_losses = math.fabs(player.singles_losses)
+        player.doubles_losses = math.fabs(player.doubles_losses)
         player.save()
+
+    Team = apps.get_model('foos', 'Team')
+    for team in Team.objects.all():
+        team.losses = math.fabs(team.losses)
+        team.save()
 
 
 class Migration(migrations.Migration):
