@@ -65,6 +65,8 @@
         <tr>
           <th>Player</th>
           <th>Rating</th>
+          <th>Wins</th>
+          <th>Losses</th>
         </tr>
         </thead>
         <tbody>
@@ -72,6 +74,8 @@
         <tr>
             <td>{{player.name}}</td>
             <td>{{player.rating}}</td>
+            <td>{{player.singles_wins}}</td>
+            <td>{{player.singles_losses}}</td>
         </tr>
       {% endfor %}
         </tbody>
@@ -134,6 +138,8 @@
         <tr>
           <th>Team</th>
           <th>Rating</th>
+          <th>Wins</th>
+          <th>Losses</th>
         </tr>
         </thead>
         <tbody>
@@ -141,6 +147,8 @@
         <tr>
             <td>{{team}}</td>
             <td>{{team.rating}}</td>
+            <td>{{team.wins}}</td>
+            <td>{{team.losses}}</td>
         </tr>
       {% endfor %}
         </tbody>

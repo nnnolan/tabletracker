@@ -181,10 +181,10 @@ def _validate_and_submit_singles_post(request):
 
     if player1_score > player2_score:
         player1.singles_wins += 1
-        player2.singles_losses -= 1
+        player2.singles_losses += 1
     elif player2_score > player1_score:
         player2.singles_wins += 1
-        player1.singles_losses -= 1
+        player1.singles_losses += 1
     else:
         player1.singles_draws += 1
         player2.singles_draws += 1
@@ -294,18 +294,18 @@ def _validate_and_submit_doubles_post(request):
 
     if team1_score > team2_score:
         team1.wins += 1
-        team2.losses -= 1
+        team2.losses += 1
         team1.player1.doubles_wins += 1
         team1.player2.doubles_wins += 1
-        team2.player1.doubles_losses -= 1
-        team2.player2.doubles_losses -= 1
+        team2.player1.doubles_losses += 1
+        team2.player2.doubles_losses += 1
     elif team2_score > team1_score:
         team2.wins += 1
-        team1.losses -= 1
+        team1.losses += 1
         team2.player1.doubles_wins += 1
         team2.player2.doubles_wins += 1
-        team1.player1.doubles_losses -= 1
-        team1.player2.doubles_losses -= 1
+        team1.player1.doubles_losses += 1
+        team1.player2.doubles_losses += 1
     else:
         team1.draws += 1
         team2.draws += 1
