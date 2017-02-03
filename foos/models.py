@@ -9,9 +9,11 @@ class Player(models.Model):
     singles_wins = models.IntegerField(default=0)
     singles_losses = models.IntegerField(default=0)
     singles_draws = models.IntegerField(default=0)
+    singles_games_played = models.IntegerField(default=0)
     doubles_wins = models.IntegerField(default=0)
     doubles_losses = models.IntegerField(default=0)
     doubles_draws = models.IntegerField(default=0)
+    doubles_games_played = models.IntegerField(default=0)
     rating = models.IntegerField(default=1000)
 
     def __str__(self):
@@ -53,6 +55,7 @@ class Team(models.Model):
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
     draws = models.IntegerField(default=0)
+    games_played = models.IntegerField(default=0)
     rating = models.IntegerField(default=1000)
 
     def __str__(self):

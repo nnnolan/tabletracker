@@ -37,10 +37,10 @@
           <td class="danger">
         {% endif %}
         {{game.player1_end_rating}} ({{game.player1_rating_change}})</td>
-        <td>{{game.player1}}</td>
+        <td><a href="{% url 'foos:player' game.player1.id %}">{{game.player1}}</a></td>
         <td>{{game.player1_score}}</td>
         <td>{{game.player2_score}}</td>
-        <td>{{game.player2}}</td>
+        <td><a href="{% url 'foos:player' game.player2.id %}">{{game.player2}}</a></td>
         {% if game.player2_rating_change > 0 %}
           <td class="success">
         {% else %}
@@ -72,7 +72,7 @@
         <tbody>
       {% for player in singles_ranking %}
         <tr>
-            <td>{{player.name}}</td>
+            <td><a href="{% url 'foos:player' player.id %}">{{player.name}}</a></td>
             <td>{{player.rating}}</td>
             <td>{{player.singles_wins}}</td>
             <td>{{player.singles_losses}}</td>

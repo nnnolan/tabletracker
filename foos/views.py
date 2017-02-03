@@ -2,14 +2,17 @@ import math
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.db.models import Q
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import SinglesGame, Player, DoublesGame, Team
 
 
 @login_required
 def index(request):
     recent_singles_games = SinglesGame.objects.order_by('-date')[:10]
-    singles_ranking = Player.objects.order_by('-rating')
+    singles_ranking = Player.objects\
+        .filter(singles_games_played__gte=4)\
+        .order_by('-rating')
 
     processed_singles_games = []
     for game in recent_singles_games:
@@ -84,6 +87,69 @@ def new_game(request):
         # Whew! Okay, the result looks valid.
         return redirect('foos:index')
 
+
+@login_required
+def player(request, player_id):
+    player = get_object_or_404(Player, pk=player_id)
+    # Pull a list of all games played by the player
+    singles_games = SinglesGame.objects\
+        .filter(Q(player1=player) | Q(player2=player))\
+        .order_by('-date')
+    processed_singles_games = []
+    for game in singles_games:
+        setattr(game, 'player1_rating_change',
+                game.player1_end_rating - game.player1_start_rating)
+        setattr(game, 'player2_rating_change',
+                game.player2_end_rating - game.player2_start_rating)
+        processed_singles_games.append(game)
+    # Build a list of wins/losses vs. every other player
+    prob_player_list = _calculate_player_win_probs(player_id)
+    # Build probability of winning vs every other player
+    return render(request, 'foos/player.html', {
+        'player' : player,
+        'singles_games' : processed_singles_games,
+        'player_probabilities' : prob_player_list
+    })
+
+
+def _calculate_player_win_probs(player_id):
+    player = Player.objects.get(id=player_id)
+    other_players = Player.objects.exclude(id=player_id)
+    results = []
+    for other in other_players:
+        # Calculate the wins and losses vs. each player
+        wins = 0
+        losses = 0
+        singles1 = SinglesGame.objects.filter(player1=player, player2=other)
+        for game in singles1:
+            if game.player1_score > game.player2_score:
+                wins += 1
+            elif game.player2_score > game.player1_score:
+                losses += 1
+        singles2 = SinglesGame.objects.filter(player1=other, player2=player)
+        for game in singles2:
+            if game.player1_score > game.player2_score:
+                losses += 1
+            elif game.player2_score > game.player1_score:
+                wins += 1
+
+        # Now calculate the probability of victory based on the rating
+        # compared to the other player
+        rating_difference = player.rating - other.rating
+        base_prob = 1 / (1 + math.pow(10, (rating_difference / 400)))
+        probability = 1 - base_prob
+        probability = round(probability * 100, 1)
+        player_obj = {
+            'name' : other.name,
+            'probability' : probability,
+            'rating' : other.rating,
+            'id' : other.id,
+            'wins' : wins,
+            'losses' : losses,
+        }
+        results.append( player_obj )
+
+    return results
 
 def _validate_and_submit_singles_post(request):
     return_data = {
