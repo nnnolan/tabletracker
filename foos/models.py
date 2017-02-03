@@ -1,5 +1,6 @@
 import datetime
 
+from dateutil import tz
 from django.db import models
 
 
@@ -37,7 +38,9 @@ class SinglesGame(models.Model):
 
     @property
     def get_date_string(self):
-        return self.date.strftime('%m/%d %H:%M')
+        desired_tz = tz.gettz('EST')
+        modified_time = self.date.astimezone(desired_tz)
+        return modified_time.strftime('%m/%d %I:%M %p')
 
     def __str__(self):
         return "%s vs. %s" % (self.player1,
@@ -68,6 +71,12 @@ class DoublesGame(models.Model):
     team2_end_rating = models.IntegerField(default=1000)
     date = models.DateTimeField(default=datetime.datetime.now,
                                 blank=True)
+
+    @property
+    def get_date_string(self):
+        desired_tz = tz.gettz('EST')
+        modified_time = self.date.astimezone(desired_tz)
+        return modified_time.strftime('%m/%d %I:%M %p')
 
     def _str__(self):
         return "%s vs. %s" % (self.team1, self.team2)
