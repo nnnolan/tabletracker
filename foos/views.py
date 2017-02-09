@@ -255,6 +255,9 @@ def _validate_and_submit_singles_post(request):
         player1.singles_draws += 1
         player2.singles_draws += 1
 
+    player1.singles_games_played += 1
+    player2.singles_games_played += 1
+
     # Update ratings
     player1.rating = p1_end_rating
     player2.rating = p2_end_rating
@@ -379,6 +382,13 @@ def _validate_and_submit_doubles_post(request):
         team1.player2.doubles_draws += 1
         team2.player1.doubles_draws += 1
         team2.player2.doubles_draws += 1
+
+    team1.player1.doubles_games_played += 1
+    team1.player2.doubles_games_played += 1
+    team2.player1.doubles_games_played += 1
+    team2.player2.doubles_games_played += 1
+    team1.games_played += 1
+    team2.games_played += 1
 
     team1.player1.save()
     team1.player2.save()
