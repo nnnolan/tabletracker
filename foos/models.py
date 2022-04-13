@@ -21,8 +21,8 @@ class Player(models.Model):
 
 
 class SinglesGame(models.Model):
-    player1 = models.ForeignKey(Player, related_name='singles_team1')
-    player2 = models.ForeignKey(Player, related_name='singles_team2')
+    player1 = models.ForeignKey(Player, related_name='singles_team1', on_delete=models.CASCADE)
+    player2 = models.ForeignKey(Player, related_name='singles_team2', on_delete=models.CASCADE)
     player1_score = models.IntegerField(default=0)
     player2_score = models.IntegerField(default=0)
     player1_start_rating = models.IntegerField(default=1000)
@@ -50,8 +50,8 @@ class SinglesGame(models.Model):
 
 
 class Team(models.Model):
-    player1 = models.ForeignKey(Player, related_name='team_player1')
-    player2 = models.ForeignKey(Player, related_name='team_player2')
+    player1 = models.ForeignKey(Player, related_name='team_player1', on_delete=models.CASCADE)
+    player2 = models.ForeignKey(Player, related_name='team_player2', on_delete=models.CASCADE)
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
     draws = models.IntegerField(default=0)
@@ -64,8 +64,8 @@ class Team(models.Model):
 
 
 class DoublesGame(models.Model):
-    team1 = models.ForeignKey(Team, related_name='doubles_team1')
-    team2 = models.ForeignKey(Team, related_name='doubles_team2')
+    team1 = models.ForeignKey(Team, related_name='doubles_team1', on_delete=models.CASCADE)
+    team2 = models.ForeignKey(Team, related_name='doubles_team2', on_delete=models.CASCADE)
     team1_score = models.IntegerField(default=0)
     team2_score = models.IntegerField(default=0)
     team1_start_rating = models.IntegerField(default=1000)
